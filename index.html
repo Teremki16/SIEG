@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Підключення стилів -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Підключення FontAwesome для використання текстових іконок -->
+  <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+    integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"
+    defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Підключення jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
+
+  <!-- Підключення локального скрипта -->
+  <script src="script.js" defer></script>
+  <title>Document</title>
+</head>
+
+<body>
+    <h1 class="headText">To do list</h1>
+
+    <div class="content">
+      <input type="text" placeholder="Name" class="inputName">
+      <input type="text" placeholder="Write..." class="inputNote">
+      <button class="addButton">Add Note +</button>
+      <button class="deleteNote">Delete Note</button>
+    </div>
+
+    <div class="Notes">
+      <div class="note">
+        <h1 class="Name">Template note</h1>
+        <p class="noteContext">Lorem ipsum dolor sit amet.</p>
+        <p class="date">11.09.2001</p>
+        <div class="buttons">
+          <button class="deleteButton"><i class="fa-solid fa-trash"></i></button>
+          <button class="correctButton"><i class="fa-solid fa-check"></i></button>
+          <button class="editButton"><i class="fa-regular fa-pen-to-square"></i></button> 
+
+        </div>
+      </div>
+    </div>
+
+  
+
+</html>

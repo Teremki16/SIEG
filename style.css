@@ -1,0 +1,83 @@
+* {
+  margin: 0;
+  padding: 0;
+  /* .jacquard-12-regular */
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
+
+}
+
+
+body{
+  display: flex;
+  flex-direction: column;
+  background: rgb(0,12,36);
+  background: linear-gradient(90deg, rgba(0,12,36,1) 0%, rgba(96,9,121,1) 35%, rgba(0,37,255,1) 100%); 
+  height: 100%;
+  align-items: center;
+}
+
+.headText {
+  color: white;
+  text-align: center;
+  flex: auto;
+  flex-direction: center;
+  
+}
+
+.content {
+  flex: auto;
+  flex-direction: column;
+}
+
+.addButton {
+  background-color: rgba(0,0, 0, 0.2);
+  color: white;
+  text-size-adjust: 1px;
+  border: none;
+  border-radius: 1px;
+  min-height:30px; 
+  min-width: 120px;
+}
+
+.deleteNote {
+  background-color: rgba(0,0, 0, 0.2);
+  color: white;
+  text-size-adjust: 1px;
+  border: none;
+  border-radius: 1px;
+  min-height:30px; 
+  min-width: 120px;
+}
+
+.inputName {
+  background-color: rgba(0,0, 0, 0.2);
+  color: white;
+  text-size-adjust: 1px;
+  border: none;
+  border-radius: 1px;
+  min-height:30px; 
+  min-width: 120px;
+}
+
+.inputNote {
+  background-color: rgba(0,0, 0, 0.2);
+  color: white;
+  text-size-adjust: 1px;
+  border: none;
+  border-radius: 1px;
+  min-height:30px; 
+  min-width: 120px;
+}
+
+.Notes {
+  border: 1px solid black;
+  padding: 0 200px;
+  border-radius: 4px;
+}
+.note{
+  
+  display: flex;
+  flex-direction: column;
+}
