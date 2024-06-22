@@ -14,20 +14,28 @@ function loadNotesFromLocalStorage() {
   let storedNotes = JSON.parse(localStorage.getItem("notes")) || [];
   Notes = storedNotes;
   $(".Notes").empty();
-  storedNotes.forEach((note) => {
+  storedNotes.forEach((note, index) => {
+    if (index % 4 === 0) {
+      $(".Notes").append("<div class='row'>");
+    }
     let noteHtml = `
-      <div class="note">
-        <h1 class="Name">${note.title}</h1>
-        <p class="noteContext">${note.text}</p>
-        <p class="date">${note.time}</p>
-        <div class="NoteButtons">
-          <button class="deleteButton">Delete<i class="fa-solid fa-trash"></i></button>
-          <button class="correctButton">Change<i class="fa-solid fa-check"></i></button>
-          <button class="editButton">Arch<i class="fa-regular fa-pen-to-square"></i></button>
+      <div class="col-3">
+        <div class="note">
+          <h1 class="Name">${note.title}</h1>
+          <p class="noteContext">${note.text}</p>
+          <p class="date">${note.time}</p>
+          <div class="NoteButtons">
+            <button class="deleteButton">Delete<i class="fa-solid fa-trash"></i></button>
+            <button class="correctButton">Change<i class="fa-solid fa-check"></i></button>
+            <button class="editButton">Archive<i class="fa-regular fa-pen-to-square"></i></button>
+          </div>
         </div>
       </div>
     `;
     $(".Notes").append(noteHtml);
+    if ((index + 1) % 4 === 0 || storedNotes.length === index + 1) {
+      $(".Notes").append("</div>");
+    }
   });
 }
 
@@ -77,8 +85,14 @@ $(document).ready(function () {
     let $name = $parent.find(".Name");
     let $noteContext = $parent.find(".noteContext");
 
-    $(".inputNameRedacting").val($name.text());
+
     $(".inputNoteRedacting").val($noteContext.text());
+    $(".inputNameRedacting").val($name.text());
+    saveNoteToLocalStorage(Notes);
+
+
+
+
 
     // Open the overlay for editing
     $(".overlay").css("display", "flex");
@@ -86,22 +100,36 @@ $(document).ready(function () {
 
     // Handle the save button click for editing
     $(".saveButton").off("click").on("click", function () {
+
       let newName = $(".inputNameRedacting").val();
+
       let newContext = $(".inputNoteRedacting").val();
 
+
       // Update the note in the UI
-      $name.text(newName);
-      $noteContext.text(newContext);
-      $parent.find(".date").text(new Date().toLocaleString());
+
+
+
 
       // Update the Notes array
-      let noteIndex = Notes.findIndex(note => note.title === $name.text());
+      let noteIndex = Notes.findIndex(note => { 
+        console.log(note.title, $name.text())
+        return note.title == $name.text()
+       });
+      console.log(noteIndex)
       if (noteIndex !== -1) {
+        console.log(Notes[noteIndex]);
         Notes[noteIndex].title = newName;
         Notes[noteIndex].text = newContext;
         Notes[noteIndex].time = new Date().toLocaleString();
+        saveNotesToLocalStorage();
       }
-      saveNotesToLocalStorage();
+      $name.text(newName);
+
+      $noteContext.text(newContext);
+
+      $parent.find(".date").text(new Date().toLocaleString());
+
       $(".overlay").hide().css("z-index", "-100");
     });
   });
@@ -116,17 +144,59 @@ $(document).ready(function () {
     });
 
     $(this).parent().parent().find(".correctButton").css("z-index", isCompleted ? "-100" : "100");
+
+
   });
 
   $(document).on("click", ".deleteButton", function () {
     let noteTitle = $(this).parent().parent().find(".Name").text();
     $(this).parent().parent().remove();
     Notes = Notes.filter(note => note.title !== noteTitle);
+
     saveNotesToLocalStorage();
   });
 
   window.addEventListener("beforeunload", saveNotesToLocalStorage);
 });
+
+function loadNotes() {
+  const notes = getNotesFromLocalStorage();
+  notes.forEach(note => {
+    addNoteToDOM(note);
+  });
+}
+
+function addNoteToDOM(note) {
+  const li = document.createElement("li");
+  li.innerHTML = `<strong>${note.title}</strong><br>${note.content} <button class="delete-note">Видалити</button>`;
+  notesList.appendChild(li);
+
+  li.querySelector(".delete-note").addEventListener("click", function () {
+    notesList.removeChild(li);
+    removeNoteFromLocalStorage(note);
+  });
+}
+
+function saveNoteToLocalStorage(note) {
+  const notes = getNotesFromLocalStorage();
+  notes.push(note);
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+function getNotesFromLocalStorage() {
+  const notes = localStorage.getItem("notes");
+  return notes ? JSON.parse(notes) : [];
+}
+
+function removeNoteFromLocalStorage(noteToRemove) {
+  const notes = getNotesFromLocalStorage();
+  const updatedNotes = notes.filter(note => note.title !== noteToRemove.title || note.content !== noteToRemove.content);
+  localStorage.setItem("notes", JSON.stringify(updatedNotes));
+}
+
+
+
+
 
 
 
